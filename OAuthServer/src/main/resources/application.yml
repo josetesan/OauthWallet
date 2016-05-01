@@ -1,0 +1,40 @@
+server:
+  port: 9999
+security:
+    oauth2:
+        client:
+            client-id: Unicef-Norway
+            client-secret: lgUnicef
+            authorized-grant-types: authorization_code,refresh_token,password
+            scope: wallet
+#            client-authentication-scheme: header
+
+spring:
+  application:
+    name: Auth-Server
+  datasource:
+      username: postgres
+      password: telerin
+      url: jdbc:postgresql://localhost:5432/users
+      data-source-class-name: org.postgresql.ds.PGPoolingDataSource
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+
+
+eureka:
+    client:
+      service-url:
+        defaultZone: http://${EUREKA_SERVER}:8761/eureka/
+      enabled: false
+    instance:
+        prefer-ip-address: true
+        status-page-url-path: ${management.context-path}/info
+logging:
+  level:
+    org.springframework.security: DEBUG
+
+
+
+

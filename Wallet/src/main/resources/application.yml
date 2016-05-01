@@ -1,0 +1,51 @@
+server:
+    port: 5000
+spring:
+    application:
+        name: WalletService
+    datasource:
+      username: postgres
+      password: telerin
+      url: jdbc:postgresql://localhost:5432/wallets
+      data-source-class-name: org.postgresql.ds.PGPoolingDataSource
+    jpa:
+      generate-ddl: true
+      hibernate:
+        ddl-auto: create-drop
+
+
+security:
+  oauth2:
+    client:
+      client-id: Unicef-Norway
+      client-secret: lgUnicef
+      access-token-uri: http://localhost:9999/oauth/token
+      user-authorization-uri: http://localhost:9999/oauth/authorize
+
+    resource:
+      id: wallet
+      token-info-uri: http://localhost:9999/oauth/token
+      user-info-uri: http://localhost:9999/oauth/authorize
+      jwt:
+        key-value:  |
+            -----BEGIN PUBLIC KEY-----
+            MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAmKRSEVOkpZMjRQhugsS6
+            wtVzFeukPZ2T5S/QfoT87+LPawJRUee/XwTnMv+gRtNl2NzdMIPT5d1unJ3oDwBU
+            KOjMIUalNyZrB+CvlMUbHW1lyW4tH6f+caoc0cAfkB1oJmIhGNaxfYfUeYtv0SUZ
+            LFuTw+jJUU5CVAMY56eV9bJVazKLHYCQeQy6RbLcZEoDmFrbRT8F60eD0u0yMBFz
+            GmBeXE5MAKnDx493JIrjwFaVaIv1Q8f2tw3nvQ+2nFOZMaS5ryIkIACvdukdrmsg
+            EukO5dt1ukMPNE2Lew3e+EfQKj8t0e3g4Jx9D8LGDlfUHpArBRK9KCy8kPwOfW8N
+            FQIDAQAB
+            -----END PUBLIC KEY-----
+
+
+
+
+eureka:
+    client:
+      service-url:
+        defaultZone: http://${EUREKA_SERVER}:8761/eureka/
+      enabled: false
+    instance:
+        prefer-ip-address: true
+        status-page-url-path: ${management.context-path}/info

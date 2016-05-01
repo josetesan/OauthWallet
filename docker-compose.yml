@@ -1,0 +1,10 @@
+auth-server:
+   build: OAuthServer
+   ports:
+      - 9999:9999
+
+wallet-service:
+   build: Wallet
+   ports:
+      - 5000:5000
+      
