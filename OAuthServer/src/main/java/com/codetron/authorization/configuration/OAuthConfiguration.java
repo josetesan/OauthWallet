@@ -12,6 +12,8 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.approval.ApprovalStore;
 import org.springframework.security.oauth2.provider.approval.InMemoryApprovalStore;
+import org.springframework.security.oauth2.provider.token.TokenEnhancer;
+import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
@@ -19,6 +21,7 @@ import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFacto
 
 import javax.inject.Inject;
 import java.security.KeyPair;
+import java.util.Arrays;
 
 /**
  * Created by josetesan on 1/05/16.
@@ -53,6 +56,11 @@ public class OAuthConfiguration extends AuthorizationServerConfigurerAdapter {
     }
 
     @Bean
+    public TokenEnhancer tokenEnhancer() {
+        return new LvTokenEnhancer();
+    }
+
+    @Bean
     public JwtAccessTokenConverter accessTokenConverter() {
         final JwtAccessTokenConverter jwtAccessTokenConverter = new JwtAccessTokenConverter();
         final KeyPair keyPair = new KeyStoreKeyFactory(
@@ -70,9 +78,13 @@ public class OAuthConfiguration extends AuthorizationServerConfigurerAdapter {
 
     @Override
     public void configure(final AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
+        final TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
+        tokenEnhancerChain.setTokenEnhancers(
+                Arrays.asList(tokenEnhancer(), accessTokenConverter()));
+
         endpoints.authenticationManager(this.authenticationManager)
                 .tokenStore(tokenStore())
-                .accessTokenConverter(accessTokenConverter());
+                .tokenEnhancer(tokenEnhancerChain);
     }
 
     @Override
@@ -92,4 +104,6 @@ public class OAuthConfiguration extends AuthorizationServerConfigurerAdapter {
 
 
     }
+
+
 }

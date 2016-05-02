@@ -1,16 +1,13 @@
 package com.codetron.authorization.configuration;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.cache.EhCacheBasedUserCache;
-import org.springframework.security.core.userdetails.cache.SpringCacheBasedUserCache;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 
@@ -25,6 +22,8 @@ import javax.sql.DataSource;
 public class WebConfiguration extends WebSecurityConfigurerAdapter{
 
 
+    @Inject
+    private DataSource dataSource;
 
 
     @Override
@@ -33,14 +32,21 @@ public class WebConfiguration extends WebSecurityConfigurerAdapter{
         return super.authenticationManagerBean();
     }
 
-    @Bean
-    @Override
-    public UserDetailsService userDetailsServiceBean() throws Exception {
 
-        final JdbcUserDetailsManager jdbcUserDetailsManager = new JdbcUserDetailsManager();
-        jdbcUserDetailsManager.setDataSource(datasource());
-        return jdbcUserDetailsManager;
-     }
+
+    @Bean
+    public JdbcUserDetailsManager userDetailsManager() {
+        final JdbcUserDetailsManager manager = new JdbcUserDetailsManager();
+        manager.setDataSource(dataSource);
+        manager.setUsersByUsernameQuery(
+                "select username,password,enabled from users where username=?");
+        manager.setAuthoritiesByUsernameQuery(
+                "select username, role from user_roles where username=?");
+        manager.setRolePrefix("ROLE_");
+        return manager;
+    }
+
+
 
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
@@ -50,7 +56,7 @@ public class WebConfiguration extends WebSecurityConfigurerAdapter{
     @Inject
     public void configureGlobal(final AuthenticationManagerBuilder auth) throws Exception {
         auth
-            .jdbcAuthentication()
+            .userDetailsService(userDetailsManager())
             .passwordEncoder(bCryptPasswordEncoder());
     }
 

@@ -16,7 +16,7 @@ import java.math.BigDecimal;
 @Entity
 public class Wallet {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "USERID",nullable = false)
     private Long userId;
