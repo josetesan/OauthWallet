@@ -3,15 +3,16 @@ server:
 security:
     oauth2:
         client:
-            client-id: Unicef-Norway
-            client-secret: lgUnicef
+            client-id: AcmeClient
+            client-secret: AcmePassword
             authorized-grant-types: authorization_code,refresh_token,password
             scope: wallet, write,read
             client-authentication-scheme: header
             authorities: ROLE_CLIENT, ROLE_TRUSTED_CLIENT
-            resource-ids: wallet
+#            resource-ids: wallet
             access-token-validity-seconds: 900
             refresh-token-validity-seconds: 3600
+
     basic:
       enabled: false
 
@@ -20,7 +21,7 @@ spring:
     name: Auth-Server
   datasource:
       username: postgres
-      password: telerin
+      password: secret
       url: jdbc:postgresql://localhost:5432/users
       data-source-class-name: org.postgresql.ds.PGPoolingDataSource
   jpa:

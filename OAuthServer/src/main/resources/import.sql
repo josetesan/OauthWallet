@@ -1,2 +1,2 @@
-insert into users (username, password, enabled) values ('josete','$2a$10$VgNpidmWxSEHLIr3wMkP1.TwZAvia/36RU8me.LBPBkawm5iwVTRK',true);
-insert into user_roles (username, role) values ('josete','role_user');
+insert into users (username, password, enabled) values ('test','$2a$06$evSAxJgV5cdklr1CkEnFAeqUcyK/xhsPnEpLpKgjPlPglbMOf9X4m',true);
+insert into user_roles (username, role) values ('test','role_user');

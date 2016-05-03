@@ -1,6 +1,5 @@
 package com.codetron.authorization.configuration;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,7 +17,6 @@ import javax.sql.DataSource;
  * Created by josetesan on 1/05/16.
  */
 @Configuration
-@EnableWebSecurity
 public class WebConfiguration extends WebSecurityConfigurerAdapter{
 
 
@@ -42,7 +40,7 @@ public class WebConfiguration extends WebSecurityConfigurerAdapter{
                 "select username,password,enabled from users where username=?");
         manager.setAuthoritiesByUsernameQuery(
                 "select username, role from user_roles where username=?");
-        manager.setRolePrefix("ROLE_");
+//        manager.setRolePrefix("ROLE_");
         return manager;
     }
 
@@ -68,6 +66,8 @@ public class WebConfiguration extends WebSecurityConfigurerAdapter{
         http.httpBasic().realmName("lottovate");
         // security path rules
         http.authorizeRequests().antMatchers("/**").permitAll();
+        // we do not want sessions !
+        http.sessionManagement().disable();
 
     }
 

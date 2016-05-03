@@ -43,6 +43,7 @@ public class OAuthConfiguration extends AuthorizationServerConfigurerAdapter {
         this.authenticationManager = authenticationManager;
     }
 
+
     @Bean
     public ApprovalStore approvalStore() {
         return new InMemoryApprovalStore();
@@ -95,7 +96,7 @@ public class OAuthConfiguration extends AuthorizationServerConfigurerAdapter {
                 .withClient(clientId)
                 .authorizedGrantTypes("password", "refresh_token","authorization_code")
                 .authorities("ROLE_CLIENT", "ROLE_TRUSTED_CLIENT")
-                .resourceIds("wallet")
+//                .resourceIds("wallet")
                 .scopes("read", "write","wallet")
                 .secret(clientSecret)
                 .accessTokenValiditySeconds(15*60) // 15 minutes

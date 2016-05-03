@@ -1,0 +1,1 @@
+insert into WALLET(USERID,AMOUNT) values (1,100);

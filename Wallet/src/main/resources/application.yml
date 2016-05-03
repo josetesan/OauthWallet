@@ -5,7 +5,7 @@ spring:
         name: WalletService
     datasource:
       username: postgres
-      password: telerin
+      password: secret
       url: jdbc:postgresql://localhost:5432/wallets
       data-source-class-name: org.postgresql.ds.PGPoolingDataSource
     jpa:
@@ -17,13 +17,13 @@ spring:
 security:
   oauth2:
     client:
-      client-id: Unicef-Norway
-      client-secret: lgUnicef
+      client-id: AcmeClient
+      client-secret: AcmePassword
       access-token-uri: http://localhost:9999/oauth/token
       user-authorization-uri: http://localhost:9999/oauth/authorize
 
     resource:
-      id: wallet
+#      id: wallet
       token-info-uri: http://localhost:9999/oauth/token
       user-info-uri: http://localhost:9999/oauth/authorize
       jwt:
@@ -38,7 +38,9 @@ security:
             FQIDAQAB
             -----END PUBLIC KEY-----
 
-
+logging:
+  level:
+    org.springframework.security: DEBUG
 
 
 eureka:
