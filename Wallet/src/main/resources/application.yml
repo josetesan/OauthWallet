@@ -5,8 +5,8 @@ spring:
         name: WalletService
     datasource:
       username: postgres
-      password: secret
-      url: jdbc:postgresql://localhost:5432/wallets
+      password: mysecretpassword
+      url: jdbc:postgresql://database:5432/postgres
       data-source-class-name: org.postgresql.ds.PGPoolingDataSource
     jpa:
       generate-ddl: true

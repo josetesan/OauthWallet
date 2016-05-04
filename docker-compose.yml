@@ -13,6 +13,8 @@ wallet-service:
       - database
 database:
    image: postgres:9.5
+   environment:
+     - POSTGRES_PASSWORD=mysecretpassword
    ports:
       - 5432:5432
       
