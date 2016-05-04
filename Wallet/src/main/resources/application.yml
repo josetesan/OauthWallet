@@ -19,13 +19,13 @@ security:
     client:
       client-id: AcmeClient
       client-secret: AcmePassword
-      access-token-uri: http://localhost:9999/oauth/token
-      user-authorization-uri: http://localhost:9999/oauth/authorize
+      access-token-uri: http://auth-server:9999/oauth/token
+      user-authorization-uri: http://auth-server:9999/oauth/authorize
 
     resource:
 #      id: wallet
-      token-info-uri: http://localhost:9999/oauth/token
-      user-info-uri: http://localhost:9999/oauth/authorize
+      token-info-uri: http://auth-server:9999/oauth/token
+      user-info-uri: http://auth-server:9999/oauth/authorize
       jwt:
         key-value:  |
             -----BEGIN PUBLIC KEY-----
