@@ -2,9 +2,17 @@ auth-server:
    build: OAuthServer
    ports:
       - 9999:9999
+   links:
+      - database      
 
 wallet-service:
    build: Wallet
    ports:
       - 5000:5000
+   links:
+      - database
+database:
+   image: postgres:9.5
+   ports:
+      - 5432:5432
       
