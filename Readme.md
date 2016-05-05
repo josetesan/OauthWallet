@@ -13,7 +13,7 @@ Use Access Token :
 
 Get Token information
 
-`curl -H"Authorization: Bearer {access_token}" http://localhost:5000/users`
+`curl -H"Authorization: Bearer {access_token}" http://localhost:5000/wallet/me`
 
 Generate JKS Java KeyStore File
 

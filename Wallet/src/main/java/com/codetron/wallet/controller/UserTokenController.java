@@ -27,7 +27,7 @@ public class UserTokenController {
     }
 
     @PreAuthorize("#oauth2.hasScope('read')")
-    @RequestMapping(method = RequestMethod.GET, value = "/users")
+    @RequestMapping(method = RequestMethod.GET, value = "/wallet/me")
     public ResponseEntity<?> getInfoFromToken(final OAuth2Authentication auth) {
         final OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) auth.getDetails();
         final OAuth2AccessToken accessToken = tokenStore.readAccessToken(details.getTokenValue());
